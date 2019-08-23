@@ -25,7 +25,16 @@
 import {mapState} from 'vuex'
 export default {
     beforeMount(){
-        // let index = this.$mp.query.index
+        let index = this.$mp.query.index
+        let oldStorage = wx.getStorageSync('isCollected')
+        if (!oldStorage) { 
+            wx.setStorage({
+                key:'isCollected',
+                data:{}
+            })
+        }else{
+            this.isCollected=(oldStorage[this.index]?true:false)
+        }
     },
     data(){
         return{
@@ -43,8 +52,13 @@ export default {
             })
 
             // 读取之前本地缓存的状态查看是否收藏
-
+            let oldStorage = wx.getStorageSync('isCollected')
+            oldStorage[this.index] = isCollected
             // 将本次设置的结果再缓存到本地
+            wx.setStorage({
+                key:'isCollected',
+                data:oldStorage
+            })
         }
     },
     mounted(){
