@@ -42,7 +42,7 @@ export default {
         },
         toDetail(){
             console.log("toDetail");
-            wx.navigateTo({
+            wx.switchTab({
                 url: '/pages/list/main',
             });
         }
